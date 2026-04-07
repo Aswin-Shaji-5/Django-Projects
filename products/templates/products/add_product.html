@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Product</title>
+    <link rel="stylesheet" href="{% static 'add_product.css' %}">
+</head>
+<body>
+
+<div class="form-container">
+
+    <div class="top-bar">
+        <button type="button" class="back-btn" onclick="history.back()">← Back</button>
+    </div>
+
+    <h2>Add Product</h2>
+
+    {% if user.userprofile.role == 'seller' %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Add Product</button>
+    </form>
+
+    {% else %}
+        <p class="access-denied">Only sellers can add products</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

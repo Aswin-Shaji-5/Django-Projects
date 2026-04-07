@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f8fb;
+        }
+
+        /* 🔥 NAVBAR */
+        .navbar {
+            background: linear-gradient(90deg, #1e3a8a, #2563eb);
+            padding: 12px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .btn-highlight {
+            background: white;
+            color: #2563eb !important;
+            font-weight: 500;
+        }
+
+        .btn-highlight:hover {
+            background: #e0ecff;
+        }
+
+        .welcome {
+            color: #e0ecff;
+            font-size: 14px;
+        }
+
+        /* 🔥 CONTENT */
+        .container {
+            padding: 30px;
+        }
+
+        h1 {
+            color: #1e3a8a;
+            margin-bottom: 20px;
+        }
+
+        /* 🔥 PRODUCT GRID */
+        .product-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            width: 220px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .product-card h3 {
+            margin: 10px 0;
+            color: #1e3a8a;
+        }
+
+        .price {
+            color: #2563eb;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #1e40af;
+        }
+    </style>
+</head>
+
+<body>
+
+<!--  NAVBAR -->
+<div class="navbar">
+    <div class="logo">Electrovolt ⚡</div>
+
+    <div class="nav-links">
+        <a href="/">Home</a>
+
+        {% if user.is_authenticated %}
+
+            <span class="welcome">Hi, {{ user.username }}</span>
+            
+            {% if user.userprofile.role == 'buyer' %}
+                <a href="{% url 'cart' %}">Cart 🛒</a>
+            {% endif %}
+
+            {% if user.userprofile.role == 'seller' %}
+                <a href="{% url 'add_product' %}" class="btn-highlight">Add Product ➕</a>
+            {% endif %}
+
+            
+
+            <a href="{% url 'logout' %}">Logout 🔓</a>
+
+        {% else %}
+            <a href="{% url 'login' %}">Login 🔐</a>
+            <a href="{% url 'register' %}" class="btn-highlight">Register 👤</a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+
+    <h1>All Products</h1>
+
+    <div class="product-grid">
+        {% for product in products %}
+            <div class="product-card">
+
+                {% if product.image %}
+                    <img src="{{ product.image.url }}">
+                {% endif %}
+
+                <h3>{{ product.name }}</h3>
+
+                <p class="price">₹{{ product.price }}</p>
+
+                {% if user.is_authenticated and user.userprofile.role == 'buyer' %}
+                    <a href="{% url 'add_to_cart' product.id %}">
+                        <button class="btn">Add to Cart 🛒</button>
+                    </a>
+                {% endif %}
+
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if not products %}
+        <p>No products available</p>
+    {% endif %}
+
+</div>
+
+</body>
+</html>

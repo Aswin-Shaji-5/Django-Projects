@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Electrovolt | Register</title>
+    <link rel="stylesheet" href="{% static 'register.css' %}">
+</head>
+<body>
+
+<div class="register-card">
+    <center>
+    <img src="{% static 'images/logo.png' %}" alt="Company Logo" class="logo">
+    </center>
+    <h2>Create Account</h2>
+
+        {% if messages %}
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.username.label_tag }}
+        {{ form.username }}
+
+        {{ form.email.label_tag }}
+        {{ form.email }}
+
+        {{ form.password.label_tag }}
+        {{ form.password }}
+
+        <label>Select Role:</label>
+        {{ form.role }}
+
+        <button type="submit">Register</button>
+    </form>
+
+    <p>Already have an account? <a href="/accounts/login/">Login</a></p>
+</div>
+
+</body>
+</html>

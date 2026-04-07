@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cart</title>
+    <link rel="stylesheet" href="{% static 'cart.css' %}">
+</head>
+<body>
+
+<div class="cart-container">
+
+    <div class="cart-header">
+        <h2>Your Cart 🛒</h2>
+        <a href="/" class="back-btn">⬅ Back to Home</a>
+    </div>
+
+    <!-- Messages -->
+    {% for message in messages %}
+        <p class="message">{{ message }}</p>
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+
+        {% if user.userprofile.role == 'buyer' %}
+
+            {% if items %}
+
+                {% for item in items %}
+                    <div class="cart-item">
+
+                        {% if item.product.image %}
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                        {% endif %}
+
+                        <div class="item-details">
+                            <h3>{{ item.product.name }}</h3>
+                            <p><strong>Price:</strong> ₹{{ item.product.price }}</p>
+                            <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+                            <p class="item-total">Total: ₹{{ item.total_price }}</p>
+                        </div>
+
+                        <a href="{% url 'remove_from_cart' item.id %}" class="remove-btn">
+                            <button>Remove ❌</button>
+                        </a>
+
+                    </div>
+                {% endfor %}
+
+                <hr class="cart-divider">
+
+                <div class="cart-summary">
+                    <h3>Grand Total: ₹{{ total }}</h3>
+
+                    <a href="{% url 'checkout' %}" class="checkout-btn">
+                        <button>Proceed to Checkout ✅</button>
+                    </a>
+                </div>
+
+            {% else %}
+                <p class="info-box">Your cart is empty 😔</p>
+            {% endif %}
+
+        {% else %}
+            <p class="info-box">Only buyers can access the cart ❌</p>
+        {% endif %}
+
+    {% else %}
+        <p class="info-box">
+            Please <a href="{% url 'login' %}">login</a> to view your cart.
+        </p>
+    {% endif %}
+
+</div>
+
+</body>
+</html>

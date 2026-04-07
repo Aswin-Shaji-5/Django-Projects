@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Electrovolt</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f8fb;
+        }
+
+        /* 🔥 NAVBAR */
+        .navbar {
+            background: linear-gradient(90deg, #1e3a8a, #2563eb);
+            padding: 12px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Logo */
+        .logo_text {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* Links container */
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Links */
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        /* Hover effect */
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Special button (highlight) */
+        .btn-highlight {
+            background: white;
+            color: #2563eb !important;
+            font-weight: 500;
+        }
+
+        .btn-highlight:hover {
+            background: #e0ecff;
+        }
+
+        /* Content area */
+        .content {
+            padding: 30px;
+        }
+
+        .logo {
+            width: 80px; /* Adjust size as needed */
+            height: auto;
+            margin-bottom: 10px;
+            border-radius: 50%;
+            border: 2px solid #007bff;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    
+    <div class="logo-text">Electrovolt <img src="{% static 'images/logo.png' %}" alt="Company Logo" class="logo"></div>
+
+    <div class="nav-links">
+        <a href="/">Home</a>
+
+        {% if user.is_authenticated %}
+            
+            {% if user.userprofile.role == 'buyer' %}
+                <a href="{% url 'cart' %}">Cart 🛒</a>
+            {% endif %}
+
+            {% if user.userprofile.role == 'seller' %}
+                <a href="{% url 'add_product' %}" class="btn-highlight">Add Product ➕</a>
+            {% endif %}
+
+            <a href="{% url 'logout' %}">Logout 🔓</a>
+
+        {% else %}
+            <a href="{% url 'login' %}">Login 🔐</a>
+            <a href="{% url 'register' %}" class="btn-highlight">Register 👤</a>
+        {% endif %}
+    </div>
+
+</div>
+
+<!-- PAGE CONTENT -->
+<div class="content">
+    {% block content %}
+    {% endblock %}
+</div>
+
+</body>
+</html>

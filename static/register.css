@@ -1,0 +1,126 @@
+/* General Reset */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Changed to min-height for longer forms */
+            margin: 0;
+            padding: 20px; /* Padding for mobile breathing room */
+        }
+
+        /* The Register Container */
+        .register-card {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            color: #0056b3;
+            margin-bottom: 25px;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 0;
+        }
+        
+        .logo {
+            width: 80px; /* Adjust size as needed */
+            height: auto;
+            margin-bottom: 10px;
+            border-radius: 50%;
+            border: 2px solid #007bff;
+        }
+
+        /* Label Styling */
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        /* Input & Select Styling (Targeting Django's auto-generated tags) */
+        input[type="text"], 
+        input[type="email"], 
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            display: inline-block;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box; 
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            outline: none;
+            font-size: 15px;
+        }
+
+        input:focus, select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+        }
+
+        /* Button Styling */
+        button {
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            padding: 14px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* Footer Text */
+        p {
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .message {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.message.error {
+    background-color: #ffdddd;
+    color: #d8000c;
+}
+
+.message.success {
+    background-color: #ddffdd;
+    color: #4f8a10;
+}
